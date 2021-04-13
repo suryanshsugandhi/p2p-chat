@@ -1,9 +1,30 @@
-import React from 'react';
-import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import React, {useState} from 'react';
+import {
+  Dimensions,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import CreateRoomModal from '../Modals/CreateRoomModal';
 
-export default () => {
+const {width} = Dimensions.get('window');
+
+export default ({navigation}) => {
+  const [modalVisible, setModalVisible] = useState(false);
+  const openCreateRoomModal = () => {
+    setModalVisible(true);
+  };
+  const closeCreateRoomModal = () => {
+    setModalVisible(false);
+  };
   return (
     <View style={styles.container}>
+      <CreateRoomModal
+        isVisible={modalVisible}
+        closeModal={closeCreateRoomModal}
+      />
       <Image
         source={{
           uri:
@@ -21,10 +42,12 @@ export default () => {
         </Text>
       </View>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity onPress={openCreateRoomModal} style={styles.button}>
           <Text style={styles.buttonText}>Create room</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('Chat')}
+          style={styles.button}>
           <Text style={styles.buttonText}>Join room</Text>
         </TouchableOpacity>
       </View>
@@ -60,13 +83,18 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   button: {
-    backgroundColor: '#e63946',
-    // backgroundColor: '#1d3557',
+    backgroundColor: '#457B9D',
     paddingHorizontal: 16,
     paddingVertical: 8,
     marginVertical: 5,
     borderRadius: 16,
-    width: '100%',
+    width: width * 0.65,
+  },
+  buttonAction: {
+    backgroundColor: '#1d3557',
+  },
+  buttonCancel: {
+    backgroundColor: '#e63946',
   },
   buttonContainer: {
     width: '45%',
