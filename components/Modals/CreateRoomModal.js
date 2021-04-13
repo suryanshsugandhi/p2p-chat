@@ -20,8 +20,10 @@ export default CreateRoomModal = ({isVisible = false, closeModal}) => {
     <Modal ref={createRoomModalRef} visible={isVisible} animationType="slide">
       <View style={styles.modalView}>
         <View style={styles.createRoomPopup}>
-          <Text>{newRoomCode}</Text>
-          <QRCode value="newRoomCode" />
+          <Text style={styles.text}>
+            Scan the QR or share the code to invite people to the chat room
+          </Text>
+          <QRCode value="newRoomCode" size={256} color="#1d3557" />
           <View style={styles.buttonContainer}>
             <TouchableOpacity
               onPress={closeModal}
@@ -46,6 +48,13 @@ export default CreateRoomModal = ({isVisible = false, closeModal}) => {
 };
 
 const styles = StyleSheet.create({
+  text: {
+    color: '#111',
+    fontSize: 16,
+    lineHeight: 24,
+    marginVertical: 16,
+    textAlign: 'center',
+  },
   buttonText: {
     color: '#fff',
     fontSize: 16,
