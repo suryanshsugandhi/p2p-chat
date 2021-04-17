@@ -1,17 +1,14 @@
-import React, {createRef, useEffect, useState} from 'react';
-import {
-  Dimensions,
-  Modal,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import React, {createRef} from 'react';
+import {Modal, StyleSheet, Text, View} from 'react-native';
 import QRCode from 'react-native-qrcode-svg';
 import Share from 'react-native-share';
 import randomUID from '../providers/util/RandomUID';
+import ButtonContainer from '../Buttons/ButtonContainer';
+import ActionButton from '../Buttons/ActionButton';
+import CancelButton from '../Buttons/CancelButton';
+import textStyles from '../Styles/textStyles';
+import Spacing from '../Styles/Spacing';
 
-const {width} = Dimensions.get('window');
 const createRoomModalRef = createRef();
 
 export default CreateRoomModal = ({isVisible = false, closeModal}) => {
@@ -35,31 +32,25 @@ export default CreateRoomModal = ({isVisible = false, closeModal}) => {
     return;
   };
 
+  const Buttons = (
+    <>
+      <ActionButton buttonText="Create" onPress={closeModal} />
+      <ActionButton buttonText="Share invite" onPress={shareRoomCode} />
+      <CancelButton buttonText="Cancel" onPress={closeModal} />
+    </>
+  );
+
   return (
     <Modal ref={createRoomModalRef} visible={isVisible} animationType="slide">
       <View style={styles.modalView}>
         <View style={styles.createRoomPopup}>
-          <Text style={styles.text}>
-            Scan the QR or share the code to invite people to the chat room
-          </Text>
-          <QRCode value={newRoomCode} size={256} color="#1d3557" />
-          <View style={styles.buttonContainer}>
-            <TouchableOpacity
-              onPress={closeModal}
-              style={[styles.button, styles.buttonAction]}>
-              <Text style={styles.buttonText}>Create</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={shareRoomCode}
-              style={[styles.button, styles.buttonAction]}>
-              <Text style={styles.buttonText}>Share Invite</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={closeModal}
-              style={[styles.button, styles.buttonCancel]}>
-              <Text style={styles.buttonText}>Cancel</Text>
-            </TouchableOpacity>
+          <View style={{marginVertical: Spacing.l}}>
+            <Text style={textStyles.paragraphLight}>
+              Scan the QR or share the code to invite people to the chat room
+            </Text>
           </View>
+          <QRCode value={newRoomCode} size={256} color="#1d3557" />
+          <ButtonContainer children={Buttons} />
         </View>
       </View>
     </Modal>
@@ -73,31 +64,6 @@ const styles = StyleSheet.create({
     lineHeight: 24,
     marginVertical: 16,
     textAlign: 'center',
-  },
-  buttonText: {
-    color: '#fff',
-    fontSize: 16,
-    textAlign: 'center',
-  },
-  button: {
-    backgroundColor: '#457B9D',
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    marginVertical: 5,
-    borderRadius: 16,
-    width: width * 0.65,
-  },
-  buttonAction: {
-    backgroundColor: '#1d3557',
-  },
-  buttonCancel: {
-    backgroundColor: '#e63946',
-  },
-  buttonContainer: {
-    width: '45%',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    marginVertical: 16,
   },
   modalView: {
     flex: 1,

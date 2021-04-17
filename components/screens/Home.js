@@ -1,15 +1,10 @@
 import React, {useState} from 'react';
-import {
-  Dimensions,
-  Image,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {Image, Text, View} from 'react-native';
+import ActionButton from '../Buttons/ActionButton';
+import ButtonContainer from '../Buttons/ButtonContainer';
 import CreateRoomModal from '../Modals/CreateRoomModal';
-
-const {width} = Dimensions.get('window');
+import textStyles from '../Styles/textStyles';
+import containerStyles from '../Styles/containerStyles';
 
 export default ({navigation}) => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -19,8 +14,19 @@ export default ({navigation}) => {
   const closeCreateRoomModal = () => {
     setModalVisible(false);
   };
+
+  const Buttons = (
+    <>
+      <ActionButton buttonText="Create room" onPress={openCreateRoomModal} />
+      <ActionButton
+        buttonText="Join room"
+        onPress={() => navigation.navigate('Chat')}
+      />
+    </>
+  );
+
   return (
-    <View style={styles.container}>
+    <View style={containerStyles.container}>
       <CreateRoomModal
         isVisible={modalVisible}
         closeModal={closeCreateRoomModal}
@@ -35,71 +41,13 @@ export default ({navigation}) => {
           width: '100%',
         }}
       />
-      <View style={styles.headingContainer}>
-        <Text style={styles.heading}>P2P Chat</Text>
-        <Text style={styles.paragraph}>
+      <View style={containerStyles.headingContainer}>
+        <Text style={textStyles.heading}>P2P Chat</Text>
+        <Text style={textStyles.paragraph}>
           Anonymous chat rooms for absolutely everything.
         </Text>
       </View>
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity onPress={openCreateRoomModal} style={styles.button}>
-          <Text style={styles.buttonText}>Create room</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => navigation.navigate('Chat')}
-          style={styles.button}>
-          <Text style={styles.buttonText}>Join room</Text>
-        </TouchableOpacity>
-      </View>
+      <ButtonContainer children={Buttons} />
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  headingContainer: {
-    width: '65%',
-  },
-  heading: {
-    fontSize: 32,
-    lineHeight: 40,
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-  paragraph: {
-    fontSize: 16,
-    lineHeight: 24,
-    fontWeight: 'normal',
-    textAlign: 'center',
-  },
-  buttonText: {
-    color: '#fff',
-    fontSize: 16,
-    textAlign: 'center',
-  },
-  container: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-  button: {
-    backgroundColor: '#1d3557',
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    marginVertical: 5,
-    borderRadius: 16,
-    width: width * 0.65,
-  },
-  buttonAction: {
-    backgroundColor: '#1d3557',
-  },
-  buttonCancel: {
-    backgroundColor: '#e63946',
-  },
-  buttonContainer: {
-    width: '45%',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    marginVertical: 16,
-  },
-});

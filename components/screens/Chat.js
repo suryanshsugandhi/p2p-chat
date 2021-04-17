@@ -1,5 +1,4 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {} from 'react-native';
 import {GiftedChat} from 'react-native-gifted-chat';
 import firestore from '@react-native-firebase/firestore';
 
