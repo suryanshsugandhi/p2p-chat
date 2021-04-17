@@ -8,6 +8,7 @@ import ActionButton from '../Buttons/ActionButton';
 import CancelButton from '../Buttons/CancelButton';
 import textStyles from '../Styles/textStyles';
 import Spacing from '../Styles/Spacing';
+import LightColors from '../Styles/LightColors';
 
 const createRoomModalRef = createRef();
 
@@ -49,7 +50,11 @@ export default CreateRoomModal = ({isVisible = false, closeModal}) => {
               Scan the QR or share the code to invite people to the chat room
             </Text>
           </View>
-          <QRCode value={newRoomCode} size={256} color="#1d3557" />
+          <QRCode
+            value={newRoomCode}
+            size={256}
+            color={LightColors.defaultButtonBackground}
+          />
           <ButtonContainer children={Buttons} />
         </View>
       </View>
@@ -58,29 +63,22 @@ export default CreateRoomModal = ({isVisible = false, closeModal}) => {
 };
 
 const styles = StyleSheet.create({
-  text: {
-    color: '#111',
-    fontSize: 16,
-    lineHeight: 24,
-    marginVertical: 16,
-    textAlign: 'center',
-  },
   modalView: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 22,
+    marginTop: Spacing.l,
   },
   createRoomPopup: {
-    margin: 20,
+    margin: Spacing.m,
     backgroundColor: 'white',
-    borderRadius: 20,
-    padding: 35,
+    borderRadius: Spacing.l,
+    padding: Spacing.l,
     alignItems: 'center',
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
-      height: 2,
+      height: Spacing.xs,
     },
     shadowOpacity: 0.25,
     shadowRadius: 4,
