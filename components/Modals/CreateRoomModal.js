@@ -1,4 +1,4 @@
-import React, {createRef} from 'react';
+import React, {createRef, useEffect, useState} from 'react';
 import {
   Dimensions,
   Modal,
@@ -8,14 +8,33 @@ import {
   View,
 } from 'react-native';
 import QRCode from 'react-native-qrcode-svg';
+import Share from 'react-native-share';
+import randomUID from '../providers/util/RandomUID';
 
 const {width} = Dimensions.get('window');
-
-const uuid = require('react-native-uuid');
 const createRoomModalRef = createRef();
 
 export default CreateRoomModal = ({isVisible = false, closeModal}) => {
-  const newRoomCode = uuid.v4();
+  const newRoomCode = randomUID();
+  console.log(newRoomCode);
+
+  const shareRoomCode = () => {
+    Share.open({
+      failOnCancel: false,
+      message: newRoomCode,
+      showAppsToView: false,
+      title: 'Share chat code',
+      method: Share.Social,
+    })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        err && console.log(err);
+      });
+    return;
+  };
+
   return (
     <Modal ref={createRoomModalRef} visible={isVisible} animationType="slide">
       <View style={styles.modalView}>
@@ -23,7 +42,7 @@ export default CreateRoomModal = ({isVisible = false, closeModal}) => {
           <Text style={styles.text}>
             Scan the QR or share the code to invite people to the chat room
           </Text>
-          <QRCode value="newRoomCode" size={256} color="#1d3557" />
+          <QRCode value={newRoomCode} size={256} color="#1d3557" />
           <View style={styles.buttonContainer}>
             <TouchableOpacity
               onPress={closeModal}
@@ -31,7 +50,7 @@ export default CreateRoomModal = ({isVisible = false, closeModal}) => {
               <Text style={styles.buttonText}>Create</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={closeModal}
+              onPress={shareRoomCode}
               style={[styles.button, styles.buttonAction]}>
               <Text style={styles.buttonText}>Share Invite</Text>
             </TouchableOpacity>
