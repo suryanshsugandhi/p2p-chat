@@ -1,5 +1,5 @@
 import React, {createRef} from 'react';
-import {Modal, StyleSheet, Text, View} from 'react-native';
+import {Modal, Text, View} from 'react-native';
 import QRCode from 'react-native-qrcode-svg';
 import Share from 'react-native-share';
 import randomUID from '../providers/util/RandomUID';
@@ -9,6 +9,7 @@ import CancelButton from '../Buttons/CancelButton';
 import textStyles from '../Styles/textStyles';
 import Spacing from '../Styles/Spacing';
 import LightColors from '../Styles/LightColors';
+import styles from './Styles';
 
 const createRoomModalRef = createRef();
 
@@ -61,27 +62,3 @@ export default CreateRoomModal = ({isVisible = false, closeModal}) => {
     </Modal>
   );
 };
-
-const styles = StyleSheet.create({
-  modalView: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: Spacing.l,
-  },
-  createRoomPopup: {
-    margin: Spacing.m,
-    backgroundColor: 'white',
-    borderRadius: Spacing.l,
-    padding: Spacing.l,
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: Spacing.xs,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-  },
-});

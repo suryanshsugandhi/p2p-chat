@@ -3,33 +3,43 @@ import {Image, Text, View} from 'react-native';
 import ActionButton from '../Buttons/ActionButton';
 import ButtonContainer from '../Buttons/ButtonContainer';
 import CreateRoomModal from '../Modals/CreateRoomModal';
+import JoinRoomModal from '../Modals/JoinRoomModal';
 import textStyles from '../Styles/textStyles';
 import containerStyles from '../Styles/containerStyles';
 
-export default ({navigation}) => {
-  const [modalVisible, setModalVisible] = useState(false);
+export default () => {
+  const [isCreateRoomModalVisible, setCreateRoomModalVisible] = useState(false);
+  const [isJoinRoomModalVisible, setJoinRoomModalVisible] = useState(false);
+
   const openCreateRoomModal = () => {
-    setModalVisible(true);
+    setCreateRoomModalVisible(true);
   };
   const closeCreateRoomModal = () => {
-    setModalVisible(false);
+    setCreateRoomModalVisible(false);
+  };
+  const openJoinRoomModal = () => {
+    setJoinRoomModalVisible(true);
+  };
+  const closeJoinRoomModal = () => {
+    setJoinRoomModalVisible(false);
   };
 
   const Buttons = (
     <>
       <ActionButton buttonText="Create room" onPress={openCreateRoomModal} />
-      <ActionButton
-        buttonText="Join room"
-        onPress={() => navigation.navigate('Chat')}
-      />
+      <ActionButton buttonText="Join room" onPress={openJoinRoomModal} />
     </>
   );
 
   return (
     <View style={containerStyles.container}>
       <CreateRoomModal
-        isVisible={modalVisible}
+        isVisible={isCreateRoomModalVisible}
         closeModal={closeCreateRoomModal}
+      />
+      <JoinRoomModal
+        isVisible={isJoinRoomModalVisible}
+        closeModal={closeJoinRoomModal}
       />
       <Image
         source={{
